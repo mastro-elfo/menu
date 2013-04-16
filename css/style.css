@@ -1,0 +1,245 @@
+*[onclick] {
+cursor: pointer;
+}
+
+body {
+padding: 0;
+margin: 0;
+}
+
+#maincontainer {}
+
+#header {
+padding: 0;
+margin: 0;
+}
+
+#navigator {
+position: fixed;
+width: 100%;
+z-index: 101;
+user-select: none;
+-moz-user-select: none;
+-webkit-user-select: none;
+-o-user-select: none;
+-ms-user-select: none;
+}
+#navigator ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
+}
+#navigator li {
+display: inline-block;
+}
+#navigator a {
+display: inline-block;
+padding: 0 10px;
+}
+#navigator a:hover {
+}
+
+#screens {
+list-style-type: none;
+padding: 0;
+margin: 0;
+position: absolute;
+width: 100%;
+}
+.screen {
+display: none;
+visibility: hidden;
+padding: 20px;
+position: absolute;
+}
+.screen-visible {
+display: block;
+visibility: visible;
+}
+
+.clearBoth {
+display: block;
+clear: both;
+height: 1px;
+width: 100%;
+border: 1px solid transparent;
+}
+/* *********** */
+/* Config page */
+/* *********** */
+#config-mainmenu {
+list-style-type: none;
+padding: 0;
+margin: 0;
+}
+#config-mainmenu > li {
+margin: 15px 0;
+padding: 10px;
+border-radius: 20px;
+border: 2px ridge #888;
+position: relative;
+min-width: 200px;
+}
+#config-mainmenu h1 {
+font-size: 100%;
+font-weight: normal;
+padding: 0 2px;
+margin: 0;
+position: absolute;
+top: -10px;
+background-color: #fff;
+}
+
+.config-dishcost {
+width: 50px;
+}
+.config-dishimg {
+display: none;
+}
+.config-dishthumb {
+max-height: 50px;
+}
+
+.config-button {
+color: #fff;
+background-color: #aaa;
+padding: 2px 5px;
+border-radius: 10px;
+cursor: pointer;
+text-align: center;
+}
+.config-button:hover {
+background-color: #ffd700;
+color: #000;
+}
+.config-button-delete {
+background-color: #c00;
+display: inline-block;
+position: relative;
+left: -15px;
+font-weight: bold;
+}
+.config-button-delete:hover {
+background-color: #f00;
+}
+#config-todaysmenu {
+user-select: none;
+-moz-user-select: none;
+-webkit-user-select: none;
+-o-user-select: none;
+-ms-user-select: none;
+}
+#config-todaysmenu table {
+float: left;
+border-collapse: collapse;
+width: 400px;
+}
+#config-todaysmenu tr:nth-child(odd) {
+background-color: #ccc;
+}
+#config-todaysmenu h1 + table {
+margin-right: 30px;
+}
+#config-todaysmenu h1 + table tr:nth-last-child(1) {
+background-color: transparent
+}
+#config-todaysmenu tr:hover {
+background-color: #aaa;
+}
+#config-todaysmenu table td {
+padding: 2px 5px;
+}
+
+#config-advertisingtable img {
+max-height: 100px;
+}
+
+#config-onlineinfo {
+width: 600px;
+height: 250px;
+border: none;
+}
+
+/* *********** */
+/*   Monitor   */
+/* *********** */
+#monitor-mainmenu {
+list-style-type: none;
+padding: 0;
+margin: 0;
+vertical-align: super;
+}
+#monitor-mainmenu > li {
+display: block;
+float: left;
+width: 280px;
+margin-top: 20px;
+margin-right: 20px;
+font-size: 16px;
+border-radius: 10px 10px 10px 10px;
+user-select: none;
+-moz-user-select: none;
+-webkit-user-select: none;
+-o-user-select: none;
+-ms-user-select: none;
+}
+#monitor-mainmenu > li h1 {
+margin: 0;
+padding: 5px 20px;
+font-size: 200%;
+text-align: center;
+border-radius: 10px 10px 10px 10px;
+}
+#monitor-mainmenu > li ul {
+list-style-position: inside;
+padding: 5px 20px;
+margin: 0;
+background-color: #fff;
+border-radius: 10px 10px 10px 10px;
+user-select: none;
+-moz-user-select: none;
+}
+#monitor-mainmenu > li li {
+cursor: pointer;
+}
+.monitor-dishfew {
+color: #f00;
+}
+.monitor-dishend {
+color: #ccc;
+text-decoration: line-through;
+}
+
+.monitor-thumbnail {
+max-height: 30px;
+vertical-align: middle;
+}
+
+/* ******************* */
+/* Monitor advertising */
+/* ******************* */
+#monitor-advertising {
+list-style-type: none;
+padding: 0;
+margin: 20px 0 0;
+width: 100%;
+text-align: center;
+}
+#monitor-advertising li {
+display: block;
+margin: 0 auto;
+}
+#monitor-advertising img {
+border: 5px solid #bbb;
+border-radius: 20px;
+width: 400px;
+height: 300px;
+background-color: #fff;
+}
+
+/* ********* */
+/* Help Menu */
+/* ********* */
+.help-faqquestion {
+font-weight: bold;
+}

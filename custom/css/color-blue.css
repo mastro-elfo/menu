@@ -1,0 +1,63 @@
+body {
+	font-family: arial, sans-serif;
+	background-color: #ddf;
+}
+#navigator {
+	background-color: #ddf;
+}
+#navigator ul {
+	border-bottom-color: #bbf;
+	color: #bbf;
+}
+#navigator a {
+	color: inherit;
+}
+#navigator a:hover {
+	background-color: #008;
+}
+#config-mainmenu h1 {
+	background-color: #ddf;
+}
+.config-button {
+	color: #fff;
+	background-color: #aaa;
+}
+.config-button:hover {
+	background-color: #ffd700;
+	color: #000;
+}
+.config-button-delete {
+	background-color: #c00;
+	font-weight: bold;
+}
+.config-button-delete:hover {
+	background-color: #f00;
+}
+#config-todaysmenu tr:nth-child(odd) {
+	background-color: #ccf;
+}
+#config-todaysmenu h1 + table tr:nth-last-child(1) {
+	background-color: transparent;
+}
+#config-todaysmenu tr:hover {
+	background-color: #aaf;
+}
+#monitor-mainmenu > li h1 {
+	background-color: #bbf;
+}
+#monitor-mainmenu > li ul {
+	background-color: #fff;
+}
+.monitor-dishfew {
+	color: #f00;
+}
+.monitor-dishend {
+	color: #ccc;
+}
+#monitor-advertising img {
+	border-color: #bbf;
+	background-color: #fff;
+}
+.help-faqquestion {
+	color: #008;
+}
