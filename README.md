@@ -23,7 +23,7 @@ It is the help page
 To do
 -----
 
-*Language support: to translate the application in more languages.
-*Browsers test: full test and development has been made with Firefox.
-*Read config file from disk: ability to read the config file directly from disk instead of copy/paste.
-*Bug fixing.
+* Language support: to translate the application in more languages.
+* Browsers test: full test and development has been made with Firefox.
+* Read config file from disk: ability to read the config file directly from disk instead of copy/paste.
+* Bug fixing.
