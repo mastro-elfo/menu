@@ -1,6 +1,10 @@
+// Locale.use('it-IT');
+Locale.use('en-US');
+
 // app info
 var app_info = {
-	version: '0.0.8a',
+	version: '0.1.0a',
+	date: Locale.get('Date.months_abbr')[4 -1]+' 2013',
 	authors: {
 		0: {
 			name: 'Francesco Michienzi',
@@ -15,65 +19,27 @@ var options = {};
 // dish type
 var dish_type = {
 	4: {
-		name: 'Antipasti'
+		name: Locale.get('App-Menu.Antipasti')
 	},
 	1: {
-		name: 'Primi'
+		name: Locale.get('App-Menu.Primi')
 	},
 	2: {
-		name: 'Secondi'
+		name: Locale.get('App-Menu.Secondi')
 	},
 	3: {
-		name: 'Contorni'
+		name: Locale.get('App-Menu.Contorni')
 	},
 	7: {
-		name: 'Pizze'
+		name: Locale.get('App-Menu.Pizze')
 	},
 	6: {
-		name: 'Dolci'
+		name: Locale.get('App-Menu.Dolci')
 	},
 	5: {
-		name: 'Bevande'
+		name: Locale.get('App-Menu.Bevande')
 	}
 }
-
-dish_suggestion = [
-	'Antipasto toscano',
-	'Antipasto di formaggi',
-	'Antipasto misto',
-	'Acqua',
-	'Birra',
-	'Caprese',
-	'Ciliegini mozzarella e basilico',
-	'Hamburger',
-	'Hamburger di seitan',
-	'Insalata',
-	'Insalatona',
-	'Patate',
-	'Patate arrosto',
-	'Patate grigliate',
-	'Patate lesse',
-	'Pasta ai funghi',
-	'Pasta al pesto',
-	'Pasta al ragù',
-	'Pasta all\'amatriciana',
-	'Pasta all\'arrabbiata',
-	'Pasta alla boscaiola',
-	'Pizza',
-	'Pizza margherita',
-	'Schiacciata',
-	'Seitan',
-	'Seitan arrosto',
-	'Tofu',
-	'Tofu alla piastra',
-	'Tofu arrosto',
-	'Torta del nonno',
-	'Torta della nonna',
-	'Tiramisù',
-	'Vino',
-	'Vino bianco',
-	'Vino rosso'
-];
 
 window.addEvent('domready', function() {
 	// open wait load window
@@ -106,6 +72,24 @@ window.addEvent('domready', function() {
 		storageType: 'local'
 	}).load();
 	
+	// carico gli elementi dell'head html
+	$$('title')[0].set('html', Locale.get('App-Menu.html-title'));
+	
+	// carico il navigatore
+	var o = '';
+	o += '<ul>';
+		o += '<li>';
+			o += '<a href="#screen-monitor" title="'+Locale.get('App-Menu.Monitor-title')+'" onclick="showScreen(\'screen-monitor\');"><span>'+Locale.get('App-Menu.Monitor')+'</span></a>';
+		o += '</li>';
+		o += '<li>';
+			o += '<a href="#screen-config" title="'+Locale.get('App-Menu.Configura-title')+'" onclick="showScreen(\'screen-config\');"><span>'+Locale.get('App-Menu.Configura')+'</span></a>';
+		o += '</li>';
+		o += '<li>';
+			o += '<a href="#screen-help" title="'+Locale.get('App-Menu.Aiuto-title')+'" onclick="showScreen(\'screen-help\');"><span>'+Locale.get('App-Menu.Aiuto')+'</span></a>';
+		o += '</li>';
+	o += '</ul>';
+	$('navigator').set('html', o);
+	
 	// carico le schermate
 	var o = '<ul id="monitor-mainmenu">';
 	var ol = {};
@@ -116,7 +100,7 @@ window.addEvent('domready', function() {
 		
 		typeof(ol[options['dishes'].get(item.name).type]) === 'undefined' ? (ol[options['dishes'].get(item.name).type] = '') : 0;
 		var dish = options['dishes'].get(item.name);
-		ol[dish.type] += '<li class="'+(item.status<2?(item.status==1?'monitor-dishfew':'monitor-dishend'):'')+'" onclick="setDishStatus(&quot;'+i+'&quot;, this);">'+dish.name+' '+(dish.cost?dish.cost+'&euro;':'')+' '+(dish.img?'<img src="custom/img/'+dish.img+'" alt="'+dish.img+'" class="monitor-thumbnail"/>':'')+'</li>';
+		ol[dish.type] += '<li class="'+(item.status<2?(item.status==1?'monitor-dishfew':'monitor-dishend'):'')+'" onclick="setDishStatus(&quot;'+i+'&quot;, this);">'+dish.name+' '+(dish.cost?Number(dish.cost).formatCurrency():'')+' '+(dish.img?'<img src="custom/img/'+dish.img+'" alt="'+dish.img+'" class="monitor-thumbnail"/>':'')+'</li>';
 	});
 	for (var i in dish_type) {
 		if (typeof(ol[i])!=='undefined') {
@@ -146,7 +130,7 @@ window.addEvent('domready', function() {
 	var o = '';
 	o += '<ul id="config-mainmenu">';
 		o += '<li id="config-todaysmenu">';
-			o += '<h1>Menù del giorno</h1>';
+			o += '<h1>'+Locale.get('App-Menu.Menu del giorno')+'</h1>';
 			o += '<table>';
 				var ol = {};
 				options['today'].each(function(item, i){
@@ -164,7 +148,7 @@ window.addEvent('domready', function() {
 						o += ol[i];
 					}
 				}
-				o += '<tr><td></td><td></td><td><div class="config-button" onclick="if(confirm(\'Sei sicuro di voler eliminare il menù del giorno? La modifica è permanente.\')){options[\'today\'].clear();location.reload()}">del all</div></td></tr>';
+				o += '<tr><td></td><td></td><td><div class="config-button" onclick="if(confirm(\''+Locale.get('App-Menu.confirm-delete-todays-menu')+'\')){options[\'today\'].clear();location.reload()}">del all</div></td></tr>';
 			o += '</table>';
 			o += '<table>';
 				options['dishes'].each(function(item, i) {
@@ -178,23 +162,23 @@ window.addEvent('domready', function() {
 			o += '<div class="clearBoth"/>'
 		o += '</li>';
 		o += '<li>';
-			o += '<h1>Piatti</h1>';
+			o += '<h1>'+Locale.get('App-Menu.Piatti')+'</h1>';
 			o += '<table>';
 				o += '<tr>';
-					o += '<td><input id="config-newdishname" placeholder="Scrivi il nome del piatto" list="dishlist"/></td> <td>'+getDishTypeSelectString('', 'config-newdishtype')+'</td> <td><input class="config-dishcost" id="config-newdishcost" placeholder="&euro;"/></td> <td><input type="file" class="config-dishimg" id="config-newdishimg" onchange="$(\'config-newdishthumb\').set(\'src\', \'custom/img/\'+event.target.value)"/><img src="" alt="icon" id="config-newdishthumb" class="config-dishthumb" onclick="$(\'config-newdishimg\').click()"/></td> <td colspan="2"><div class="config-button" onclick="setDish();location.reload()">set</div></td>'
+					o += '<td><input id="config-newdishname" placeholder="'+Locale.get('App-Menu.newdishname-placeholder')+'" list="dishlist"/></td> <td>'+getDishTypeSelectString('', 'config-newdishtype')+'</td> <td><input class="config-dishcost" id="config-newdishcost" placeholder="'+Locale.get('Number.currency.prefix')+'"/></td> <td><input type="file" class="config-dishimg" id="config-newdishimg" onchange="$(\'config-newdishthumb\').set(\'src\', \'custom/img/\'+event.target.value)"/><img src="" alt="'+Locale.get('App-Menu.dish-icon-alt')+'" id="config-newdishthumb" class="config-dishthumb" onclick="$(\'config-newdishimg\').click()"/></td> <td colspan="2"><div class="config-button" onclick="setDish();location.reload()">set</div></td>'
 				o += '<tr>';
 				options['dishes'].each(function(item, key) {
 					o += '<tr>';
-						o += '<td><input id="config-dishname-'+key+'" value="'+item.name+'"/></td> <td>'+getDishTypeSelectString(item.type, 'config-dishtype-'+key)+'</td> <td><input class="config-dishcost" id="config-dishcost-'+key+'" placeholder="&euro;" value="'+(typeof(item.cost)!=='undefined'?item.cost:'')+'"/></td> <td><input type="file" class="config-dishimg" id="config-dishimg-'+key+'" onchange="$(\'config-dishthumb-'+key+'\').setAttribute(\'src\', \'custom/img/\'+event.target.value)"/> <img src="'+(typeof(item.img)!=='undefined'?'custom/img/'+item.img:'')+'" alt="icon&nbsp;&nbsp;&nbsp;" id="config-dishthumb-'+key+'" class="config-dishthumb" onclick="$(\'config-dishimg-'+key+'\').click()"/> <div class="config-button config-button-delete" onclick="$(\'config-dishimg-'+key+'\').value=\'\';$(\'config-dishthumb-'+key+'\').set(\'src\', \'\');">X</div></td> <td><div class="config-button" onclick="setDish(\''+key+'\');location.reload()">set</div></td> <td><div class="config-button" onclick="if(confirm(\'Vuoi davvero eliminare il piatto &quot;'+(item.name.replace('\'', '\\\''))+'&quot;? La modifica è permanente.\')){deleteDish(\''+key+'\');location.reload()}">del</div></td>'
+						o += '<td><input id="config-dishname-'+key+'" value="'+item.name+'"/></td> <td>'+getDishTypeSelectString(item.type, 'config-dishtype-'+key)+'</td> <td><input class="config-dishcost" id="config-dishcost-'+key+'" placeholder="'+Locale.get('Number.currency.prefix')+'" value="'+(typeof(item.cost)!=='undefined'?item.cost:'')+'"/></td> <td><input type="file" class="config-dishimg" id="config-dishimg-'+key+'" onchange="$(\'config-dishthumb-'+key+'\').setAttribute(\'src\', \'custom/img/\'+event.target.value)"/> <img src="'+(typeof(item.img)!=='undefined'?'custom/img/'+item.img:'')+'" alt="'+Locale.get('App-Menu.dish-icon-alt')+'&nbsp;&nbsp;&nbsp;" id="config-dishthumb-'+key+'" class="config-dishthumb" onclick="$(\'config-dishimg-'+key+'\').click()"/> <div class="config-button config-button-delete" onclick="$(\'config-dishimg-'+key+'\').value=\'\';$(\'config-dishthumb-'+key+'\').set(\'src\', \'\');">X</div></td> <td><div class="config-button" onclick="setDish(\''+key+'\');location.reload()">set</div></td> <td><div class="config-button" onclick="if(confirm(Locale.get(\'App-Menu.confirm-delete-dish\').replace(/%s/, \''+(item.name.replace('\'', '\\\''))+'\'))){deleteDish(\''+key+'\');location.reload()}">del</div></td>'
 					o += '</tr>';
 				});
 				o += '<tr>';
-					o += '<td colspan="4"></td> <td colspan="2"><div class="config-button" onclick="if(confirm(\'Vuoi davvero eliminare tutti i piatti salvati? La modifica è permanente e comporta la perdita anche del menù.\')){options[\'dishes\'].clear();options[\'today\'].clear();location.reload()}">del all</div></td>'
+					o += '<td colspan="4"></td> <td colspan="2"><div class="config-button" onclick="if(confirm(Locale.get(\'App-Menu.confirm-delete-all-dish\'))){options[\'dishes\'].clear();options[\'today\'].clear();location.reload()}">del all</div></td>'
 				o += '<tr>';
 			o += '</table>';
 		o += '</li>';
 		o += '<li>';
-			o += '<h1>Pubblicità</h1>';
+			o += '<h1>'+Locale.get('App-Menu.Pubblicità')+'</h1>';
 			o += '<table id="config-advertisingtable">';
 				var advertising = options['advertising'].get('config-advertisinginput-1');
 				typeof(advertising) === 'undefined'? advertising = {name: ''} : 0;
@@ -203,27 +187,27 @@ window.addEvent('domready', function() {
 					o += '<td><input type="file" placeholder="Scegli un file" id="config-advertisinginput-1" value="./custom/img/'+advertising.name+'"/></td>';
 					o += '<td><div class="config-button" onclick="if(setAdvertisingFile(\'config-advertisinginput-1\')){location.reload()}">set</div></td>';
 					o += '<td><div class="config-button" onclick="$(\'config-advertisinginput-1\').value=\'\';setAdvertisingFile(\'config-advertisinginput-1\', false);location.reload()">del</div></td>';
-					o += '<td><img src="custom/img/'+advertising.name+'" alt="Nessuna immagine configurata"/></td>';
+					o += '<td><img src="custom/img/'+advertising.name+'" alt="'+Locale.get('App-Menu.no-advertising-image')+'"/></td>';
 				o += '</tr>';
 			o += '</table>';
 		o += '</li>';
 		o += '<li>';
-			o += '<h1>Opzioni generali</h1>';
+			o += '<h1>'+Locale.get('App-Menu.Opzioni generali')+'</h1>';
 			o += '<table>';
 				o += '<tr>';
-					o += '<td>Esporta configurazione</td>';
+					o += '<td>'+Locale.get('App-Menu.Esporta configurazione')+'</td>';
 					o += '<td><textarea id="config-expconfig"></textarea></td>';
 					o += '<td><div class="config-button" onclick="exportConfig()">exp</div></td>';
 				o += '</tr>';
 				o += '<tr>';
-					o += '<td>Importa configurazione</td>';
+					o += '<td>'+Locale.get('App-Menu.Importa configurazione')+'</td>';
 					o += '<td><textarea id="config-impconfig"></textarea></td>';
-					o += '<td><div class="config-button" onclick="if(confirm(\'Vuoi davvero importare questa configurazione? La nuova configurazione sovrascrive quella attuale.\')){importConfig();location.reload()}">imp</div></td>';
+					o += '<td><div class="config-button" onclick="if(confirm(\''+Locale.get('App-Menu.confirm-add-config')+'\')){importConfig();location.reload()}">imp</div></td>';
 				o += '</tr>';
 				o += '<tr>';
-					o += '<td>Aggiungi configurazione</td>';
+					o += '<td>'+Locale.get('App-Menu.Aggiungi configurazione')+'</td>';
 					o += '<td><textarea id="config-merconfig"></textarea></td>';
-					o += '<td><div class="config-button" onclick="if(confirm(\'Vuoi davvero importare questa configurazione? Verranno modificate solo le proprietà incluse nell\\\'input.\')){mergeConfig();location.reload()}">add</div></td>';
+					o += '<td><div class="config-button" onclick="if(confirm(\''+Locale.get('App-Menu.confirm-add-config')+'\')){mergeConfig();location.reload()}">add</div></td>';
 				o += '</tr>';
 			o += '</table>';
 		o += '</li>';
@@ -233,46 +217,46 @@ window.addEvent('domready', function() {
 	var o = '';
 	o += '<ul id="config-mainmenu">';
 		o += '<li>';
-			o += '<h1>Informazioni generali</h1>';
+			o += '<h1>'+Locale.get('App-Menu.general-info-title')+'</h1>';
 			o += '<ul>';
 				o += '<li>Authors:<ul>';
 				for (var i in app_info.authors) {
-					 o += '<li>'+app_info.authors[i].name+(app_info.authors[i].email?' <a href="mailto:'+app_info.authors[i].email+'?subject=Application menu JS" title="Invia un\'email">&lt;'+app_info.authors[i].email+'&gt;</a>':'')+'</li>';
+					 o += '<li>'+app_info.authors[i].name+(app_info.authors[i].email?' <a href="mailto:'+app_info.authors[i].email+'?subject=Application menu JS" title="'+Locale.get('App-Menu.general-info-sendemail')+'">&lt;'+app_info.authors[i].email+'&gt;</a>':'')+'</li>';
 				}
 				o += '</ul></li>';
-				o += '<li>Version: '+app_info.version+'</li>';
-				o += '<li>Date: apr 2013</li>';
-				o += '<li>Test: "Firefox 20.0"</li>';
+				o += '<li>'+Locale.get('App-Menu.general-info-version')+': '+app_info.version+'</li>';
+				o += '<li>'+Locale.get('App-Menu.general-info-date')+': '+app_info.date+'</li>';
+				o += '<li>'+Locale.get('App-Menu.general-info-test')+': "Firefox 20.0"</li>';
 			o += '</ul>';
 		o += '</li>';
 		o += '<li>';
-			o += '<h1>Informazioni online</h1>'
+			o += '<h1>'+Locale.get('App-Menu.online-info-title')+'</h1>'
 			o += '<iframe src="http://mastroelfo.altervista.org/custom/user/html/menu-online-info.php?version='+app_info.version+'" id="config-onlineinfo">Il computer è offline o non riesce a contattare il server.</iframe>'
 		o += '</li>';
 		o += '<li>';
 			o += '<h1>F.A.Q.</h1>';
 			o += '<ul>';
-				o += '<li><span class="help-faqquestion">Come si crea il menu?</span> <span class="help-manualanswer">Prima bisogna creare la lista dei piatti inserendo il nome e il tipo. Poi si aggiungono i piatti al menu del giorno.</span></li>';
-				o += '<li><span class="help-faqquestion">Un piatto è finito o sta per finire.</span> <span class="help-manualanswer">Direttamente dalla schermata di monitor, quando si clicca su un piatto questo cambia colore e/o stile a seconda del foglio di stile caricato. Il primo click indica che il piatto è qasi finito, il secondo che il piatto è terminato. Con un altro click si riporta il piatto alla condizione iniziale.</span></li>';
-				o += '<li><span class="help-faqquestion">Dove caricare le immagini?</span> <span class="help-manualanswer">Per motivi di sicurezza le immagini devono trovarsi all\'interno della cartella "custom/img/".</span></li>';
+				o += '<li><span class="help-faqquestion">'+Locale.get('App-Menu.faq-q1')+'</span> <span class="help-manualanswer">'+Locale.get('App-Menu.faq-a1')+'</span></li>';
+				o += '<li><span class="help-faqquestion">'+Locale.get('App-Menu.faq-q2')+'</span> <span class="help-manualanswer">'+Locale.get('App-Menu.faq-a2')+'</span></li>';
+				o += '<li><span class="help-faqquestion">'+Locale.get('App-Menu.faq-q3')+'</span> <span class="help-manualanswer">'+Locale.get('App-Menu.faq-a3')+'</span></li>';
 			o += '</ul>';
 		o += '</li>';
 		o += '<li>';
-			o += '<h1>Bug noti e sviluppi futuri</h1>';
+			o += '<h1>'+Locale.get('App-Menu.bug-title')+'</h1>';
 			o += '<ul>';
-				o += '<li>Test approfonditi per assicurare piena compatibilità anche con Chrome, Safari e Opera. Al momento la piena compatibilità è stata testata su Firefox 20.0. Chrome, Safari e Opera presentano alcune incompatibilità. Internet Explorer non funziona.</li>';
-				o += '<li>Lettura fine di configurazione da file invece che con input.</li>';
-				o += '<li>Fornire un set di icone e piatti predefiniti.</li>';
-				o += '<li>Possibilità di scelta del foglio di stile custom.</li>';
-				o += '<li>Tipologia di piatto configurabile</li>';
-				o += '<li>Supporto multilingua.</li>';
-				o += '<li>Scrivere il manuale di utilizzo.</li>';
-				o += '<li>Compatibilità con Internet Explorer.</li>';
+				o += '<li>'+Locale.get('App-Menu.bug-1')+'</li>';
+				o += '<li>'+Locale.get('App-Menu.bug-2')+'</li>';
+				o += '<li>'+Locale.get('App-Menu.bug-3')+'</li>';
+				o += '<li>'+Locale.get('App-Menu.bug-4')+'</li>';
+				o += '<li>'+Locale.get('App-Menu.bug-5')+'</li>';
+				o += '<li>'+Locale.get('App-Menu.bug-7')+'</li>';
+				o += '<li>'+Locale.get('App-Menu.bug-8')+'</li>';
 			o += '</ul>';
 		o += '</li>';
-		o += '<li><h1>Updates</h1>';
+		o += '<li><h1>'+Locale.get('App-Menu.updates-title')+'</h1>';
 			o += '<ul>';
-				o += '<li>0.0.*: inizio sviluppo.</li>';
+				o += '<li>'+Locale.get('App-Menu.updates-0_1')+': '+Locale.get('App-Menu.updates-0_1-value')+'</li>';
+				o += '<li>'+Locale.get('App-Menu.updates-0_0')+': '+Locale.get('App-Menu.updates-0_0-value')+'</li>';
 			o += '</ul>';
 		o += '</li>';
 	o += '</ul>';
@@ -285,6 +269,7 @@ window.addEvent('domready', function() {
 	
 	// altre inizializzazioni
 	var o = '';
+	var dish_suggestion = Locale.get('App-Menu.dish_suggestion');
 	for (var i = 0; i<dish_suggestion.length; i++) {
 		o += '<option value="'+dish_suggestion[i]+'"/>';
 	}
@@ -302,7 +287,7 @@ function mergeConfig() {
 }
 function importConfig() {
 	if (!$('config-impconfig').value) {
-		alert('Configurazione vuota.');
+		alert(Locale.get('App-Menu.alert-empty-config'));
 		return;
 	}
 	var config  = JSON.decode($('config-impconfig').value);
@@ -343,7 +328,8 @@ function setDish(id) {
 		// this is a new dish
 		if (options['dishes'].get($('config-newdishname').value.replace('\'', '-').replace(' ', '-'))) {
 			// the dish already exists
-			alert('Il piatto "'+$('config-newdishname').value+'" esiste già. Operazione annullata.');
+			// alert('Il piatto "'+$('config-newdishname').value+'" esiste già. Operazione annullata.');
+			alert(Locale.get('App-Menu.alert-dish-exists').replace(/%s/, $('config-newdishname').value));
 			return;
 		}
 		options['dishes'].set($('config-newdishname').value.replace('\'', '-').replace(' ', '-'), {
