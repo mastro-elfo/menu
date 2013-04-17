@@ -1,5 +1,5 @@
-// Locale.use('it-IT');
-Locale.use('en-US');
+Locale.use('it-IT');
+// Locale.use('en-US');
 
 // app info
 var app_info = {
