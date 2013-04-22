@@ -1,0 +1,51 @@
+body {
+	font-family: arial, sans-serif;
+	background-color: #fee;
+}
+#navigator {
+	background-color: #fee;
+}
+#navigator ul {
+	border-bottom-color: #800;
+	color: #fbb;
+}
+#navigator a {
+	color: inherit;
+}
+#navigator a:hover {
+	background-color: #800;
+}
+#config-mainmenu h1 {
+	background-color: #fee;
+}
+#config-mainmenu > li {
+	border-color: #800;
+}
+#config-todaysmenu tr:nth-child(odd) {
+	background-color: #fdd;
+}
+#config-todaysmenu h1 + table tr:nth-last-child(1) {
+	background-color: transparent;
+}
+#config-todaysmenu tr:hover {
+	background-color: #daa;
+}
+#monitor-mainmenu > li h1 {
+	background-color: #f00;
+}
+#monitor-mainmenu > li ul {
+	background-color: #fff;
+}
+.monitor-dishfew {
+	color: #f00;
+}
+.monitor-dishend {
+	color: #ccc;
+}
+#monitor-advertising img {
+	border-color: #f00;
+	background-color: #fff;
+}
+.help-faqquestion {
+	color: #800;
+}

@@ -3,7 +3,7 @@ Locale.use('it-IT');
 
 // app info
 var app_info = {
-	version: '0.1.0a',
+	version: '0.1.2b',
 	date: Locale.get('Date.months_abbr')[4 -1]+' 2013',
 	authors: {
 		0: {
@@ -72,8 +72,37 @@ window.addEvent('domready', function() {
 		storageType: 'local'
 	}).load();
 	
+	options['style'] = new HTML5.storage({
+		storageName: 'style',
+		storageType: 'local'
+	}).load();
+	
+	if (options['main'].get('language')) {
+		Locale.use(options['main'].get('language'));
+	}
+	
 	// carico gli elementi dell'head html
 	$$('title')[0].set('html', Locale.get('App-Menu.html-title'));
+	
+	(function(){
+		var style = options['style'].get('style');
+		if (style && style != '') {
+			new Element('link', {
+				'rel': 'stylesheet',
+				'href': 'custom/css/'+style
+			}).inject($$('head')[0]);
+		}
+	})();
+	
+	(function(){
+		var style = options['style'].get('color');
+		if (style && style != '') {
+			new Element('link', {
+				'rel': 'stylesheet',
+				'href': 'custom/css/'+style
+			}).inject($$('head')[0]);
+		}
+	})();
 	
 	// carico il navigatore
 	var o = '';
@@ -193,6 +222,7 @@ window.addEvent('domready', function() {
 		o += '</li>';
 		o += '<li>';
 			o += '<h1>'+Locale.get('App-Menu.Opzioni generali')+'</h1>';
+			o += '<h2>'+Locale.get('App-Menu.config-import-export')+'</h2>';
 			o += '<table>';
 				o += '<tr>';
 					o += '<td>'+Locale.get('App-Menu.Esporta configurazione')+'</td>';
@@ -202,12 +232,38 @@ window.addEvent('domready', function() {
 				o += '<tr>';
 					o += '<td>'+Locale.get('App-Menu.Importa configurazione')+'</td>';
 					o += '<td><textarea id="config-impconfig"></textarea></td>';
-					o += '<td><div class="config-button" onclick="if(confirm(\''+Locale.get('App-Menu.confirm-add-config')+'\')){importConfig();location.reload()}">imp</div></td>';
+					o += '<td><div class="config-button" onclick="if(confirm(\''+Locale.get('App-Menu.confirm-import-config')+'\')){importConfig();location.reload()}">imp</div></td>';
 				o += '</tr>';
 				o += '<tr>';
 					o += '<td>'+Locale.get('App-Menu.Aggiungi configurazione')+'</td>';
 					o += '<td><textarea id="config-merconfig"></textarea></td>';
 					o += '<td><div class="config-button" onclick="if(confirm(\''+Locale.get('App-Menu.confirm-add-config')+'\')){mergeConfig();location.reload()}">add</div></td>';
+				o += '</tr>';
+			o += '</table>';
+			o += '<h2>'+Locale.get('App-Menu.config-style')+'</h2>';
+			o += '<table>';
+				o += '<tr>';
+					o += '<td>'+Locale.get('App-Menu.config-style-style')+'</td>';
+					o += '<td><input id="config-style-style-file" type="file" onchange="editStyle(\'edit\', \'style\', this.value);location.reload();"/><input value="'+options['style'].get('style')+'" onclick="$(\'config-style-style-file\').click();" readonly="readonly"/></td>';
+					o += '<td><div class="config-button" onclick="editStyle(\'delete\', \'style\');location.reload();">del</div></td>';
+				o += '</tr>';
+				o += '<tr>';
+					o += '<td>'+Locale.get('App-Menu.config-style-color')+'</td>';
+					o += '<td><input id="config-style-color-file" type="file" onchange="editStyle(\'edit\', \'color\', this.value);location.reload();"/><input value="'+options['style'].get('color')+'" onclick="$(\'config-style-color-file\').click();" readonly="readonly"/></td>';
+					o += '<td><div class="config-button" onclick="editStyle(\'delete\', \'color\');location.reload();">del</div></td>';
+				o += '</tr>';
+			o += '</table>';
+			o += '<h2>'+Locale.get('App-Menu.config-lang')+'</h2>';
+			o += '<table>';
+				o += '<tr>';
+				o += '<td>'+Locale.get('App-Menu.config-lang-select')+'</td>';
+				o += '<td>';
+					o += '<select onchange="editLanguage(this.value);location.reload();">';
+						for (var i in Languages) {
+							o += '<option value="'+i+'"'+(i==options['main'].get('language')?' selected="selected"':'')+'>'+Languages[i]+'</option>';
+						}
+					o += '</select>';
+				o += '</td>';
 				o += '</tr>';
 			o += '</table>';
 		o += '</li>';
@@ -226,7 +282,7 @@ window.addEvent('domready', function() {
 				o += '</ul></li>';
 				o += '<li>'+Locale.get('App-Menu.general-info-version')+': '+app_info.version+'</li>';
 				o += '<li>'+Locale.get('App-Menu.general-info-date')+': '+app_info.date+'</li>';
-				o += '<li>'+Locale.get('App-Menu.general-info-test')+': "Firefox 20.0"</li>';
+				o += '<li>'+Locale.get('App-Menu.general-info-test')+': "Firefox 20.0", "Chrome 25"</li>';
 			o += '</ul>';
 		o += '</li>';
 		o += '<li>';
@@ -239,6 +295,7 @@ window.addEvent('domready', function() {
 				o += '<li><span class="help-faqquestion">'+Locale.get('App-Menu.faq-q1')+'</span> <span class="help-manualanswer">'+Locale.get('App-Menu.faq-a1')+'</span></li>';
 				o += '<li><span class="help-faqquestion">'+Locale.get('App-Menu.faq-q2')+'</span> <span class="help-manualanswer">'+Locale.get('App-Menu.faq-a2')+'</span></li>';
 				o += '<li><span class="help-faqquestion">'+Locale.get('App-Menu.faq-q3')+'</span> <span class="help-manualanswer">'+Locale.get('App-Menu.faq-a3')+'</span></li>';
+				o += '<li><span class="help-faqquestion">'+Locale.get('App-Menu.faq-q4')+'</span> <span class="help-manualanswer">'+Locale.get('App-Menu.faq-a4')+'</span></li>';
 			o += '</ul>';
 		o += '</li>';
 		o += '<li>';
@@ -247,7 +304,6 @@ window.addEvent('domready', function() {
 				o += '<li>'+Locale.get('App-Menu.bug-1')+'</li>';
 				o += '<li>'+Locale.get('App-Menu.bug-2')+'</li>';
 				o += '<li>'+Locale.get('App-Menu.bug-3')+'</li>';
-				o += '<li>'+Locale.get('App-Menu.bug-4')+'</li>';
 				o += '<li>'+Locale.get('App-Menu.bug-5')+'</li>';
 				o += '<li>'+Locale.get('App-Menu.bug-7')+'</li>';
 				o += '<li>'+Locale.get('App-Menu.bug-8')+'</li>';
@@ -277,8 +333,23 @@ window.addEvent('domready', function() {
 	
 });
 
+function editLanguage(language) {
+	options['main'].set('language', language);
+}
+
+function editStyle(action, style, value) {
+	switch (action) {
+		case 'edit':
+			options['style'].set(style, value.replace('C:\\fakepath\\',''));
+			break;
+		case 'delete':
+			options['style'].set(style, '');
+			break;
+	}
+}
+
 function mergeConfig() {
-	var config  = JSON.decode($('config-merconfig').value);
+	var config  = JSON.decode($('config-merconfig').value.replace('<html><body>', '').replace('</body></html>', ''));
 	for (var i in config) {
 		for (var j in config[i]) {
 			options[i].set(j, config[i][j]);
@@ -290,7 +361,7 @@ function importConfig() {
 		alert(Locale.get('App-Menu.alert-empty-config'));
 		return;
 	}
-	var config  = JSON.decode($('config-impconfig').value);
+	var config  = JSON.decode($('config-impconfig').value.replace('<html><body>', '').replace('</body></html>', ''));
 	for (var i in config) {
 		options[i].clear();
 		for (var j in config[i]) {
@@ -300,7 +371,7 @@ function importConfig() {
 }
 
 function exportConfig() {
-	var o = '{';
+	var o = '<html><body>{';
 	for (var i in options) {
 		o += '\''+i+'\':{';
 		options[i].each(function(item, key) {
@@ -308,7 +379,7 @@ function exportConfig() {
 		});
 		o += '},';
 	}
-	o += '}';
+	o += '}</body></html>';
 	$('config-expconfig').value = o;
 }
 
@@ -349,12 +420,6 @@ function setDish(id) {
 		});
 	}
 }
-/*
-function setDish(value, type, cost, id) {
-	id = typeof(id) === 'undefined' ? value : id;
-	options['dishes'].set(id, {name: value, type: type, cost: cost});
-}
-*/
 
 function deleteDish(id) {
 	options['dishes'].remove(id);

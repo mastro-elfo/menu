@@ -1,0 +1,51 @@
+body {
+	font-family: arial, sans-serif;
+	background-color: #e0ffe0;
+}
+#navigator {
+	background-color: #e0ffe0;
+}
+#navigator ul {
+	border-bottom-color: #009000;
+	color: #bfb;
+}
+#navigator a {
+	color: inherit;
+}
+#navigator a:hover {
+	background-color: #009000;
+}
+#config-mainmenu h1 {
+	background-color: #e0ffe0;
+}
+#config-mainmenu > li {
+	border-color: #080;
+}
+#config-todaysmenu tr:nth-child(odd) {
+	background-color: #d0f0d0;
+}
+#config-todaysmenu h1 + table tr:nth-last-child(1) {
+	background-color: transparent;
+}
+#config-todaysmenu tr:hover {
+	background-color: #a0e0a0;
+}
+#monitor-mainmenu > li h1 {
+	background-color: #00aa00;
+}
+#monitor-mainmenu > li ul {
+	background-color: #fff;
+}
+.monitor-dishfew {
+	color: #f00;
+}
+.monitor-dishend {
+	color: #ccc;
+}
+#monitor-advertising img {
+	border-color: #00aa00;
+	background-color: #fff;
+}
+.help-faqquestion {
+	color: #080;
+}

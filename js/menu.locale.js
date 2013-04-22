@@ -41,12 +41,18 @@ Locale.define('it-IT', 'App-Menu', {
 	
 	// +general options
 	'Opzioni generali': 'Opzioni generali',
+	'config-import-export': 'Importa/Esporta configurazione',
 	'Esporta configurazione': 'Esporta configurazione',
 	'Importa configurazione': 'Importa configurazione',
 	'Aggiungi configurazione': 'Aggiungi configurazione',
 	'confirm-import-config': 'Vuoi davvero importare questa configurazione? La nuova configurazione sovrascrive quella attuale.',
 	'confirm-add-config': 'Vuoi davvero importare questa configurazione? Verranno modificate solo le proprietà incluse nell\\\'input.',
 	'alert-empty-config': 'Configurazione vuota.',
+	'config-style': 'Configura stile',
+	'config-style-style': 'Configura struttura',
+	'config-style-color': 'Configura colore',
+	'config-lang': 'Configura lingua',
+	'config-lang-select': 'Seleziona lingua',
 	
 	// Help page
 	// +general info
@@ -68,13 +74,14 @@ Locale.define('it-IT', 'App-Menu', {
 	'faq-a2': 'Direttamente dalla schermata di monitor, quando si clicca su un piatto questo cambia colore e/o stile a seconda del foglio di stile caricato. Il primo click indica che il piatto è qasi finito, il secondo che il piatto è terminato. Con un altro click si riporta il piatto alla condizione iniziale.',
 	'faq-q3': 'Dove caricare le immagini?',
 	'faq-a3': 'Per motivi di sicurezza le immagini devono trovarsi all\'interno della cartella "custom/img/".',
+	'faq-q4': 'Dove caricare i fogli di stile?',
+	'faq-a4': 'I fogli di stile devono essere caricati nella cartella "custom/css/". Un set di fogli di stile predefiniti si trova nella cartella "dist/css/".',
 	
 	// +bug
 	'bug-title': 'Bug noti e sviluppi futuri',
-	'bug-1': 'Test approfonditi per assicurare piena compatibilità anche con Chrome, Safari e Opera. Al momento la piena compatibilità è stata testata su Firefox 20.0. Chrome, Safari e Opera presentano alcune incompatibilità. Internet Explorer non funziona.',
+	'bug-1': 'Test approfonditi per assicurare piena compatibilità anche con Chrome, Safari e Opera. Al momento la piena compatibilità è stata testata su "Firefox 20" e "Chrome 25".',
 	'bug-2': 'Lettura file di configurazione da disco invece che con input.',
 	'bug-3': 'Fornire un set di icone e piatti predefiniti.',
-	'bug-4': 'Possibilità di scelta del foglio di stile custom.',
 	'bug-5': 'Tipologia di piatto configurabile.',
 	'bug-7': 'Scrivere il manuale di utilizzo.',
 	'bug-8': 'Compatibilità con Internet Explorer.',
@@ -83,8 +90,8 @@ Locale.define('it-IT', 'App-Menu', {
 	'updates-title': 'Updates',
 	'updates-0_0': '0.0.x',
 	'updates-0_1': '0.1.x',
-	'updates-0_0-value': 'inizio sviluppo.',
-	'updates-0_1-value': 'supporto multilingua.'
+	'updates-0_0-value': 'Inizio sviluppo.',
+	'updates-0_1-value': '<ul><li>Supporto multilingua.</li><li>Fogli di stile configurabili.</li></ul>'
 });
 
 Locale.define('it-IT', 'Number').inherit('EU');
@@ -132,12 +139,18 @@ Locale.define('en-US', 'App-Menu', {
 	
 	// +general options
 	'Opzioni generali': 'General options',
+	'config-import-export': 'Import/Export configuration',
 	'Esporta configurazione': 'Export configuration',
 	'Importa configurazione': 'Import configuration',
 	'Aggiungi configurazione': 'Add configuration',
 	'confirm-import-config': 'Do you really want to import this configuration? The new configuration will overwrite the old one.',
 	'confirm-add-config': 'Do you really want to add this configuration? Only the input properties will be set.',
 	'alert-empty-config': 'Empty configuration.',
+	'config-style': 'Configure style',
+	'config-style-style': 'Configure structore',
+	'config-style-color': 'Configure color',
+	'config-lang': 'Configure language',
+	'config-lang-select': 'Select language',
 	
 	// Help page
 	// +general info
@@ -165,7 +178,6 @@ Locale.define('en-US', 'App-Menu', {
 	'bug-1': 'Full test.',
 	'bug-2': 'Read config file from disk.',
 	'bug-3': 'Default set of dishes and icons.',
-	'bug-4': 'Choose the custom stylesheets.',
 	'bug-5': 'Editable dish kind.',
 	'bug-7': 'Write user manual.',
 	'bug-8': 'Compatibility with IE.',
@@ -175,3 +187,8 @@ Locale.define('en-US', 'App-Menu', {
 	'updates-0_0-value': 'start development.',
 	'updates-0_1-value': 'multi-language support.'
 }).inherit('it-IT', 'App-Menu');
+
+var Languages = {
+	'it-IT': 'Italiano',
+	'en-US': 'English (United States)'
+};
