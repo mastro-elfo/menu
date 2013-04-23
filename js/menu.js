@@ -3,7 +3,7 @@ Locale.use('it-IT');
 
 // app info
 var app_info = {
-	version: '0.1.2b',
+	version: '0.1.3b',
 	date: Locale.get('Date.months_abbr')[4 -1]+' 2013',
 	authors: {
 		0: {
@@ -232,12 +232,22 @@ window.addEvent('domready', function() {
 				o += '<tr>';
 					o += '<td>'+Locale.get('App-Menu.Importa configurazione')+'</td>';
 					o += '<td><textarea id="config-impconfig"></textarea></td>';
-					o += '<td><div class="config-button" onclick="if(confirm(\''+Locale.get('App-Menu.confirm-import-config')+'\')){importConfig();location.reload()}">imp</div></td>';
+					o += '<td><div class="config-button" onclick="if(confirm(\''+Locale.get('App-Menu.confirm-import-config')+'\')){importConfig();location.reload();}">imp</div></td>';
+				o += '</tr>';
+				o += '<tr>';
+					o += '<td>'+Locale.get('App-Menu.Importa configurazione da file')+'</td>';
+					o += '<td><input id="config-impconfig-from-file" type="file"/></td>';
+					o += '<td><div class="config-button" onclick="if(confirm(\''+Locale.get('App-Menu.confirm-import-config')+'\')){importConfigFromFile($(\'config-impconfig-from-file\').value);}">imp</div></td>';
 				o += '</tr>';
 				o += '<tr>';
 					o += '<td>'+Locale.get('App-Menu.Aggiungi configurazione')+'</td>';
 					o += '<td><textarea id="config-merconfig"></textarea></td>';
 					o += '<td><div class="config-button" onclick="if(confirm(\''+Locale.get('App-Menu.confirm-add-config')+'\')){mergeConfig();location.reload()}">add</div></td>';
+				o += '</tr>';
+				o += '<tr>';
+					o += '<td>'+Locale.get('App-Menu.Aggiungi configurazione da file')+'</td>';
+					o += '<td><input id="config-addconfig-from-file" type="file"/></td>';
+					o += '<td><div class="config-button" onclick="if(confirm(\''+Locale.get('App-Menu.confirm-add-config')+'\')){addConfigFromFile($(\'config-addconfig-from-file\').value);}">add</div></td>';
 				o += '</tr>';
 			o += '</table>';
 			o += '<h2>'+Locale.get('App-Menu.config-style')+'</h2>';
@@ -302,11 +312,11 @@ window.addEvent('domready', function() {
 			o += '<h1>'+Locale.get('App-Menu.bug-title')+'</h1>';
 			o += '<ul>';
 				o += '<li>'+Locale.get('App-Menu.bug-1')+'</li>';
-				o += '<li>'+Locale.get('App-Menu.bug-2')+'</li>';
 				o += '<li>'+Locale.get('App-Menu.bug-3')+'</li>';
 				o += '<li>'+Locale.get('App-Menu.bug-5')+'</li>';
 				o += '<li>'+Locale.get('App-Menu.bug-7')+'</li>';
 				o += '<li>'+Locale.get('App-Menu.bug-8')+'</li>';
+				o += '<li>'+Locale.get('App-Menu.bug-9')+'</li>';
 			o += '</ul>';
 		o += '</li>';
 		o += '<li><h1>'+Locale.get('App-Menu.updates-title')+'</h1>';
@@ -333,6 +343,53 @@ window.addEvent('domready', function() {
 	
 });
 
+function readFromFile(filepath, callback, timeout) {
+	filepath = filepath.replace('C:\\fakepath\\','');
+	typeof(timeout) == 'undefined'? timeout = 10 : 0;
+	var iframe = new Element ('iframe', {
+		'src': filepath
+	}).setStyle('position', 'fixed').inject(document.body);
+	(function() {
+		var load = function(timeout) {
+			var content = iframe.contentWindow.document.body.innerHTML;
+			if (typeof(content) != 'undefined' && content && content!='') {
+				callback(content);
+				iframe.destroy();
+			}
+			else if(timeout > 0) {
+				setTimeout(function(){load(--timeout);}, 100);
+			}
+			else {
+				iframe.destroy();
+			}
+		}
+		setTimeout(function(){load(timeout);}, 100);
+	})();
+}
+
+function addConfigFromFile(filename) {
+	if (!filename || filename=='') {
+		alert(Locale.get('App-Menu.alert-empty-filename'));
+		return;
+	}
+	var basedir = './custom/backup/';
+	readFromFile(basedir+filename, function(config){
+		_mergeConfig(config);
+		location.reload();
+	});
+}
+function importConfigFromFile(filename) {
+	if (!filename || filename=='') {
+		alert(Locale.get('App-Menu.alert-empty-filename'));
+		return;
+	}
+	var basedir = './custom/backup/';
+	readFromFile(basedir+filename, function(config){
+		_importConfig(config);
+		location.reload();
+	});
+}
+
 function editLanguage(language) {
 	options['main'].set('language', language);
 }
@@ -349,7 +406,16 @@ function editStyle(action, style, value) {
 }
 
 function mergeConfig() {
-	var config  = JSON.decode($('config-merconfig').value.replace('<html><body>', '').replace('</body></html>', ''));
+	/*var config  = JSON.decode($('config-merconfig').value.replace('<html><body>', '').replace('</body></html>', ''));
+	for (var i in config) {
+		for (var j in config[i]) {
+			options[i].set(j, config[i][j]);
+		}
+	}*/
+	_mergeConfig($('config-merconfig').value);
+}
+function _mergeConfig(config) {
+	config  = JSON.decode(config.replace('<html><body>', '').replace('</body></html>', ''));
 	for (var i in config) {
 		for (var j in config[i]) {
 			options[i].set(j, config[i][j]);
@@ -361,7 +427,10 @@ function importConfig() {
 		alert(Locale.get('App-Menu.alert-empty-config'));
 		return;
 	}
-	var config  = JSON.decode($('config-impconfig').value.replace('<html><body>', '').replace('</body></html>', ''));
+	_importConfig($('config-impconfig').value);
+}
+function _importConfig(config) {
+	config  = JSON.decode(config.replace('<html><body>', '').replace('</body></html>', ''));
 	for (var i in config) {
 		options[i].clear();
 		for (var j in config[i]) {
@@ -369,7 +438,6 @@ function importConfig() {
 		}
 	}
 }
-
 function exportConfig() {
 	var o = '<html><body>{';
 	for (var i in options) {

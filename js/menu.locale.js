@@ -53,6 +53,9 @@ Locale.define('it-IT', 'App-Menu', {
 	'config-style-color': 'Configura colore',
 	'config-lang': 'Configura lingua',
 	'config-lang-select': 'Seleziona lingua',
+	'Importa configurazione da file': 'Importa da file',
+	'Aggiungi configurazione da file': 'Aggiungi da file',
+	'alert-empty-filename': 'File non specificato',
 	
 	// Help page
 	// +general info
@@ -79,19 +82,19 @@ Locale.define('it-IT', 'App-Menu', {
 	
 	// +bug
 	'bug-title': 'Bug noti e sviluppi futuri',
-	'bug-1': 'Test approfonditi per assicurare piena compatibilità anche con Chrome, Safari e Opera. Al momento la piena compatibilità è stata testata su "Firefox 20" e "Chrome 25".',
-	'bug-2': 'Lettura file di configurazione da disco invece che con input.',
+	'bug-1': 'Test approfonditi per assicurare piena compatibilità anche con Chrome, Safari e Opera. Al momento la piena compatibilità è stata testata su "Firefox 20".',
 	'bug-3': 'Fornire un set di icone e piatti predefiniti.',
 	'bug-5': 'Tipologia di piatto configurabile.',
 	'bug-7': 'Scrivere il manuale di utilizzo.',
 	'bug-8': 'Compatibilità con Internet Explorer.',
+	'bug-9': 'Con Chrome non è possibile caricare la configurazione direttamente da file',
 	
 	// +updates
 	'updates-title': 'Updates',
 	'updates-0_0': '0.0.x',
 	'updates-0_1': '0.1.x',
 	'updates-0_0-value': 'Inizio sviluppo.',
-	'updates-0_1-value': '<ul><li>Supporto multilingua.</li><li>Fogli di stile configurabili.</li></ul>'
+	'updates-0_1-value': '<ul><li>Supporto multilingua.</li><li>Fogli di stile configurabili.</li><li>Lettura configurazione da file.</li></ul>'
 });
 
 Locale.define('it-IT', 'Number').inherit('EU');
@@ -151,6 +154,9 @@ Locale.define('en-US', 'App-Menu', {
 	'config-style-color': 'Configure color',
 	'config-lang': 'Configure language',
 	'config-lang-select': 'Select language',
+	'Importa configurazione da file': 'Import from file',
+	'Aggiungi configurazione da file': 'Add from file',
+	'alert-empty-filename': 'File not specified',
 	
 	// Help page
 	// +general info
@@ -172,20 +178,22 @@ Locale.define('en-US', 'App-Menu', {
 	'faq-a2': 'In the monitor screen, when you click on a dish it changes its style regarding the choosen stylesheet. The first click means the dish is near to end. The second click means the dish ended. The third click restore the dish status.',
 	'faq-q3': 'Where do I copy the images?',
 	'faq-a3': 'For security reasons the images must be copied into the directory "custom/img/".',
+	'faq-q4': 'Where do I save my custom stylesheets?',
+	'faq-a4': 'Stylesheets must be saved into the directory "custom/css/". A default set of stylesheets is inside the directory "dist/css/".',
 	
 	// +bug
 	'bug-title': 'Known bug and future developments',
 	'bug-1': 'Full test.',
-	'bug-2': 'Read config file from disk.',
 	'bug-3': 'Default set of dishes and icons.',
 	'bug-5': 'Editable dish kind.',
 	'bug-7': 'Write user manual.',
 	'bug-8': 'Compatibility with IE.',
+	'bug-9': 'Con Chrome non è possibile caricare la configurazione direttamente da file',
 	
 	// +updates
 	'updates-title': 'Updates',
-	'updates-0_0-value': 'start development.',
-	'updates-0_1-value': 'multi-language support.'
+	'updates-0_0-value': 'Start development.',
+	'updates-0_1-value': '<ul><li>Multi-language support.</li><li>Configurable stylesheet.</li><li>Read configuration from file.</li></ul>'
 }).inherit('it-IT', 'App-Menu');
 
 var Languages = {
