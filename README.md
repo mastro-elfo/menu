@@ -18,12 +18,13 @@ It is the page where you can edit the menu and other configuration.
 Aiuto
 -----
 
-It is the help page
+It is the help page.
 
 To do
 -----
 
-* Language support: to translate the application in more languages.
 * Browsers test: full test and development has been made with Firefox.
-* Read config file from disk: ability to read the config file directly from disk instead of copy/paste.
+* Editable dish type.
+* Write user manual.
+* Find a default set of icons and dishes.
 * Bug fixing.
